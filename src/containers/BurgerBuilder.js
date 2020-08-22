@@ -126,7 +126,23 @@ class BurgerBuilder extends Component {
     //         .catch(error => {
     //             this.setState({ loading: false, purchasing: false });
     //         });
-    this.props.history.push('/checkout');
+
+    let queryParams=[];
+    //let i in .. provides us with the keys of the object
+    //let i for .. provides us with the values of the object coresponding to the keys
+    for( let i in this.state.ingredients){
+        queryParams.push(encodeURIComponent(i)+"="+encodeURIComponent(this.state.ingredients[i]));
+            
+     } console.log("queryparam");
+     console.log(queryParams);
+        queryParams.push("price="+this.state.burgerTotalprice);
+       
+
+    this.props.history.push(
+        {pathname: '/checkout',
+        search: '?'+queryParams.join('&'),
+        }
+    )
      }
 
     initilizingTheIngredients=(databaseIngredients)=>{

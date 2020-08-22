@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+import ContactData from './ContactData/ContactData';
+import { Route } from 'react-router-dom';
+
 
 class Checkout extends Component {
 
@@ -8,11 +11,31 @@ class Checkout extends Component {
         super(props);
         this.state = {
             ingredients: {
-                Salad: 1,
-                Meat: 2,
-                Cheese: 1,
-            }
+                Salad: 0,
+                Meat: 0,
+                Cheese: 0,
+            },
+            price: null
         };
+    }
+
+    componentDidMount() {
+
+        let query = new URLSearchParams(this.props.location.search);
+        let ingredients = {};
+        let price = null;
+        for (let param of query.entries()) {
+            if (param[0] === "price")
+                price = param[1];
+            else ingredients[param[0]] = +param[1];
+
+        }
+        //each enteri is like : ["key", "value"]
+
+        this.setState({
+            ingredients: ingredients,
+            price:price,
+        });
     }
 
 
@@ -21,19 +44,26 @@ class Checkout extends Component {
         this.props.history.replace('/checkout/contact-data');
     }
     checkoutCancelHandler() {
-        this.props.history.goBack('/checkout/contact-data');
+        this.props.history.goBack();
     }
 
     render() {
 
 
         return (
-            <CheckoutSummary ingredients={this.state.ingredients}
-                checkoutContinue={()=>this.checkoutContinueHandler()}
-                checkoutCancelled={()=>this.checkoutCancelHandler()}
+            <>
+                <CheckoutSummary ingredients={this.state.ingredients}
+                    checkoutContinue={() => this.checkoutContinueHandler()}
+                    checkoutCancelled={() => this.checkoutCancelHandler()}
 
-            />
+                />
 
+                <Route path={this.props.match.path + '/contact-data'}
+                    render={(props) => (<ContactData ingredients={this.state.ingredients}
+                         price={this.state.price}    {...props}/>)}
+                  
+                />
+            </>
         );
 
 
