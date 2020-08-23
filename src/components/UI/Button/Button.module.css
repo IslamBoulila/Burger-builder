@@ -23,3 +23,7 @@ color:limegreen;
 .Danger{
     color: red;
 }
+
+.Button:disabled{
+    color:grey;
+}

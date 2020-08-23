@@ -3,7 +3,8 @@ import styles from './Input.module.css';
 
 const Input = (props) => {
     let cssClasses = [styles.inputElement];
-    if (props.invalid && props.shouldValidate) cssClasses.push(styles.invalid);
+    if (props.invalid && props.shouldValidate && props.touched)
+        cssClasses.push(styles.invalid);
 
     let inputElement;
     switch (props.inputType) {
