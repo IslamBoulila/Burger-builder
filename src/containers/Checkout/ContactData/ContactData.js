@@ -1,43 +1,83 @@
 import React, { Component } from 'react';
 import Button from '../../../components/UI/Button/Button';
+import Input from '../../../components/UI/Input/Input';
 import styles from '../ContactData/ContactData.module.css';
 import axiosInstance from '../../../axios-order';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-
 
 
 class ContactData extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            email: '',
-            address: {
-                homeNumber: '',
-                street: '',
+            orderForm:{
+                name:{
+                    elementType:"input",
+                    inputConfig:{
+                        placeHolder:"Name",
+                        type:"text",
+                        name:"name",
+                    },
+                    value:"",
+                },
+                email:{
+                    elementType:"input",
+                    inputConfig:{
+                        placeHolder:"Email",
+                        type:"email",
+                        name:"email",
+                    },
+                    value:"",
+                },
+                street:{
+                    elementType:"input",
+                    inputConfig:{
+                        placeHolder:"Street",
+                        type:"text",
+                        name:"street"
+                    },
+                    value:"",
+                },
+
+                homeNumber:{
+                    elementType:"input",
+                    inputConfig:{
+                        placeHolder:"Home Number",
+                        type:"number",
+                        name:"homeNumber",
+                    },
+                    value:"",
+                },
+                deliveryMode:{
+                    elementType:"select",
+                    inputConfig:{
+                        options:[ {value:'fastest', displayValue:'Fastest'}, {value:'normal', displayValue:'Normal'}],
+                        name:'deliveryMode'
+                    },
+                    value:"",
+                },
+
+                
             },
+            
             loading: false,
         }
     }
 
     inputChangeHandler = (event) => {
         const field = event.target.name;
-        console.log(event.target.value);
-        if (field !== "street" && field !== "homeNumber") {
-            this.setState({
-                [field]: event.target.value
-            });
-        }
-        else {
-            this.setState(prevState => (
-                {
-                    address: {
-                        ...prevState.address,
-                        [field]: event.target.value,
-                    }
-                })
-            );
-        }
+        let inputValue=event.target.value;
+        this.setState(prevState=>({
+            orderForm:{
+                         ...prevState.orderForm,
+                         [field]:{
+                             ...prevState.orderForm[field],
+                             value:inputValue,
+                         },
+                     }
+             })
+        ); 
+        
     }
 
     onSubmitContactFormHandler = (event) => {
@@ -46,18 +86,23 @@ class ContactData extends Component {
         console.log(this.props.ingredients);
 
         this.setState({ loading: true });
-
+        const contactFormData={};
+       for(let data in this.state.orderForm){
+        contactFormData[data]=this.state.orderForm[data].value;
+       }
         const orderData = {
             ingredients: this.props.ingredients,
 
             customer: {
-                name: this.state.name,
-                address: this.state.address,
-                email: this.state.email,
-
+                name: contactFormData.name,
+                email: contactFormData.email,
+                address: {
+                    street:contactFormData.street,
+                    homeNumber:contactFormData.homeNumber,
+                },  
             },
             price: this.props.price,
-            deliveryMethod: 'fastest'
+            deliveryMode: contactFormData.deliveryMode,
         }
         axiosInstance.post('/orders.json', orderData)
             .then(response => {
@@ -74,12 +119,23 @@ class ContactData extends Component {
     }
 
     render() {
+        let inputElements=[];
+        for(let inputKey in this.state.orderForm){
+            inputElements.push(
+                {id:inputKey,
+                config:this.state.orderForm[inputKey],
+                }
+            );
+        }
         let form = (
             <form onSubmit={this.onSubmitContactFormHandler}>
-                <input className={styles.Input} name="name" placeholder="Name " onChange={this.inputChangeHandler} value={this.state.name} />
-                <input className={styles.Input} name="email" placeholder="Email" onChange={this.inputChangeHandler} value={this.state.email} />
-                <input className={styles.Input} name="street" placeholder="Street" onChange={this.inputChangeHandler} value={this.state.address.street} />
-                <input className={styles.Input} name="homeNumber" placeholder="Home number" onChange={this.inputChangeHandler} value={this.state.address.homeNumber} />
+               {inputElements.map(input=>(
+                    <Input key={input.id}  inputType={input.config.elementType}   
+                            inputConfig={input.config.inputConfig} 
+                           onChange={this.inputChangeHandler}
+                           value={input.config.value} />
+               ))}
+               
                 <Button btnType="Success" >Order</Button>
 
             </form>);

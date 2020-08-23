@@ -1,0 +1,21 @@
+.Input{
+    width: 80%;
+    margin:10px auto;
+    box-sizing: border-box;
+    padding:5px;
+    
+}
+.label{
+    font-weight: bold;
+}
+.inputElement{
+display: block;
+border:2px solid #ccc;
+background-color: white;
+padding:5px;
+width: 100%;
+}
+.inputElement:focus{
+outline:none;
+background-color: lightsteelblue;
+}
