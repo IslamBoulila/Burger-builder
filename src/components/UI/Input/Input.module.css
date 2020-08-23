@@ -19,3 +19,8 @@ width: 100%;
 outline:none;
 background-color: lightsteelblue;
 }
+
+.invalid{
+    background-color: salmon;
+    border:2px solid red;
+}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, isValidElement } from 'react';
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import styles from '../ContactData/ContactData.module.css';
@@ -14,39 +14,58 @@ class ContactData extends Component {
                 name:{
                     elementType:"input",
                     inputConfig:{
-                        placeHolder:"Name",
+                        placeholder:"Name",
                         type:"text",
                         name:"name",
                     },
                     value:"",
+                    validation:{
+                        required:true,
+                        minLength:'3',
+                    },
+                    valid:false,
                 },
                 email:{
                     elementType:"input",
                     inputConfig:{
-                        placeHolder:"Email",
+                        placeholder:"Email",
                         type:"email",
                         name:"email",
                     },
                     value:"",
+                    validation:{
+                        required:true,
+                        
+                    },
+                    valid:false,
                 },
                 street:{
                     elementType:"input",
                     inputConfig:{
-                        placeHolder:"Street",
+                        placeholder:"Street",
                         type:"text",
                         name:"street"
                     },
                     value:"",
+                    validation:{
+                        required:true,
+                        minLength:'4',
+                    },
+                    valid:false,
                 },
 
                 homeNumber:{
                     elementType:"input",
                     inputConfig:{
-                        placeHolder:"Home Number",
+                        placeholder:"Home Number",
                         type:"number",
                         name:"homeNumber",
                     },
                     value:"",
+                    validation:{
+                        required:true,
+                    },
+                    valid:false,
                 },
                 deliveryMode:{
                     elementType:"select",
@@ -57,22 +76,34 @@ class ContactData extends Component {
                     value:"",
                 },
 
-                
             },
             
             loading: false,
         }
     }
+    checkValidation(value,rules){
+        let isValid=true;
+        if(rules.required){
+            isValid=value.trim("")!=="" && isValid;
+        }
+        if(rules.minLength){
+            isValid=value.length>=rules.minLength && isValid;
+        }
+        return isValid;
+    }
 
     inputChangeHandler = (event) => {
         const field = event.target.name;
         let inputValue=event.target.value;
+        let isValid=this.checkValidation(inputValue,this.state.orderForm[field].validation);
+        console.log(isValid);
         this.setState(prevState=>({
             orderForm:{
                          ...prevState.orderForm,
                          [field]:{
                              ...prevState.orderForm[field],
                              value:inputValue,
+                             valid:isValid,
                          },
                      }
              })
@@ -133,7 +164,9 @@ class ContactData extends Component {
                     <Input key={input.id}  inputType={input.config.elementType}   
                             inputConfig={input.config.inputConfig} 
                            onChange={this.inputChangeHandler}
-                           value={input.config.value} />
+                           value={input.config.value} 
+                           invalid={!input.config.valid}
+                           shouldValidate={input.config.validation}/>
                ))}
                
                 <Button btnType="Success" >Order</Button>

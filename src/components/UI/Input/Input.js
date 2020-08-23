@@ -2,25 +2,27 @@ import React from 'react';
 import styles from './Input.module.css';
 
 const Input = (props) => {
+    let cssClasses = [styles.inputElement];
+    if (props.invalid && props.shouldValidate) cssClasses.push(styles.invalid);
 
-    let inputElement ;
-    switch (props.inputType){
+    let inputElement;
+    switch (props.inputType) {
         case "input":
-            inputElement=<input className={styles.inputElement} {...props.inputConfig} value={props.value} onChange={props.onChange}/>
+            inputElement = <input className={cssClasses.join(" ")} {...props.inputConfig} value={props.value} onChange={props.onChange} />
             break;
         case "textarea":
-            inputElement=<textarea className={styles.inputElement} {...props.inputConfig} onChange={props.onChange} value={props.value} onChange={props.onChange} />
+            inputElement = <textarea className={cssClasses.join(" ")} {...props.inputConfig} onChange={props.onChange} value={props.value} onChange={props.onChange} />
             break;
         case "select":
-             inputElement=<select className={styles.inputElement} name={props.inputConfig.name} value={props.value} onChange={props.onChange} >
-                                {props.inputConfig.options.map(option=>
-                                    (<option key={option.value} value={option.value} >{option.displayValue}</option>)) }
-                        </select>
-                         
-             break;
-        default :
-        inputElement=<input className={styles.inputElement} {...props.inputConfig} value={props.value} value={props.value} onChange={props.onChange}/>
-        break;
+            inputElement = <select className={cssClasses.join(" ")} name={props.inputConfig.name} value={props.value} onChange={props.onChange} >
+                {props.inputConfig.options.map(option =>
+                    (<option key={option.value} value={option.value} >{option.displayValue}</option>))}
+            </select>
+
+            break;
+        default:
+            inputElement = <input className={cssClasses.join(" ")} {...props.inputConfig} value={props.value} value={props.value} onChange={props.onChange} />
+            break;
     }
 
     return (
