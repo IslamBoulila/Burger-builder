@@ -1,6 +1,6 @@
 import React from 'react';
-import * as actions from './actions';
-import {INGREDIENT_PRICES} from '../store/prices';
+import * as actionTypes from '../actions/actionTypes';
+import {INGREDIENT_PRICES} from '../prices';
 
 const initialState = {
     ingredients: {
@@ -14,7 +14,7 @@ const initialState = {
 const ingredientsReducer=(state=initialState,action)=>{
     switch (action.type){
 
-            case actions.ADD_INGREDIENT:
+            case actionTypes.ADD_INGREDIENT:
                 {  
                     const updatedIngredients = {...state.ingredients };
                 updatedIngredients[action.payload.type] = updatedIngredients[action.payload.type] + 1
@@ -27,7 +27,7 @@ const ingredientsReducer=(state=initialState,action)=>{
 
                 }
 
-                case actions.REMOVE_INGREDIENT:
+                case actionTypes.REMOVE_INGREDIENT:
                 {    const updatedIngredients = { ...state.ingredients };
                 updatedIngredients[action.payload.type] = updatedIngredients[action.payload.type] >= 0 ? updatedIngredients[action.payload.type] - 1 : 0
               
@@ -40,7 +40,7 @@ const ingredientsReducer=(state=initialState,action)=>{
 
                 }
 
-                case actions.INITIALIZE_INGREDIENT:
+                case actionTypes.INITIALIZE_INGREDIENTS:
                     {   const  updatedState={...state};
                         Object.keys(state.ingredients).map(ingredient => {
             

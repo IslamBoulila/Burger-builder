@@ -4,14 +4,13 @@ import BuildControls from '../components/BuildControls/BuildControls';
 import Modal from '../components/UI/Modal/Modal';
 import OrderSummary from '../components/OrderSummary/OrderSummary';
 import axiosInstance from '../axios-order';
-import { object } from 'prop-types';
+
 import Spinner from '../components/UI/Spinner/Spinner';
 import withErrorHandeling from '../hoc/withErrorHandler/withErrorHandler';
 import {connect} from 'react-redux';
-
 import {INGREDIENT_PRICES} from '../store/prices';
 
-import * as actions from '../store/actions';
+import * as actionCreators from '../store/actions/index';
 
 /*const INGREDIENT_PRICES = {
     Salad: 4.5,
@@ -117,20 +116,20 @@ class BurgerBuilder extends Component {
     this.props.history.push( '/checkout' )
      }
 
-    initilizingTheIngredients=(databaseIngredients)=>{
-      //  this.setState({ingredients:databaseIngredients});
+    // initilizingTheIngredients=(databaseIngredients)=>{
+    //   //  this.setState({ingredients:databaseIngredients});
 
-        Object.keys(this.state.ingredients).map(ingredient => {
+    //     Object.keys(this.state.ingredients).map(ingredient => {
             
-            if (this.state.ingredients[ingredient] !== 0){
-                this.setState({ burgerTotalprice: this.state.burgerTotalprice + INGREDIENT_PRICES[ingredient]
-                });
-                this.updatePurchasable(databaseIngredients);
-            }
+    //         if (this.state.ingredients[ingredient] !== 0){
+    //             this.setState({ burgerTotalprice: this.state.burgerTotalprice + INGREDIENT_PRICES[ingredient]
+    //             });
+    //             this.updatePurchasable(databaseIngredients);
+    //         }
            
-        });
+    //     });
    
-    }
+    // }
 
     componentDidMount() {
       console.log(  this.props);
@@ -214,9 +213,9 @@ const  mapStateToProps=(state)=>{
 
 const  mapDispatchToProps=(dispatch)=>{
     return{
-        onAddIngredient: (ingredient)=>dispatch({type:actions.ADD_INGREDIENT,  payload:{type:ingredient}}),
-        onRemoveIngredient: (ingredient)=>dispatch({type:actions.REMOVE_INGREDIENT,  payload:{type:ingredient}}),
-        onInitilizeIngredients:   ()=>   dispatch({type:actions.INITIALIZE_INGREDIENT }),
+        onAddIngredient: (ingredient)=>dispatch(actionCreators.addIngredient(ingredient)),
+        onRemoveIngredient: (ingredient)=>dispatch(actionCreators.removeIngredient(ingredient)),
+        onInitilizeIngredients:   ()=>   dispatch(actionCreators.initializeIngredients()),
     };
 };
 

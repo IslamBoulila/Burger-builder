@@ -7,7 +7,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import ingredientReducer from './store/ingredientReducer';
+import ingredientReducer from './store/reducers/burgerBuilder';
 
 
 const rootReducer = combineReducers(
