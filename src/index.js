@@ -5,13 +5,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {createStore, combineReducers, applyMiddleware,compose} from 'redux';
 import {Provider} from 'react-redux';
-import ingredientReducer from './store/reducers/burgerBuilder';
+import thunk from 'redux-thunk';
+import burgerBuilderReducer from './store/reducers/burgerBuilder';
+
 
 
 const rootReducer = combineReducers(
-  {ingredientsRed: ingredientReducer,
+  {ingredientsRed: burgerBuilderReducer,
 
 });
 const loggerMiddleware= store =>{
@@ -25,7 +27,9 @@ const loggerMiddleware= store =>{
         }
     }
 };
-const store = createStore(rootReducer,applyMiddleware(loggerMiddleware)); 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer,composeEnhancers(
+  applyMiddleware(loggerMiddleware ,thunk)  ) ); 
 
 ReactDOM.render(
   <React.StrictMode>

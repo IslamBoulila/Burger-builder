@@ -22,17 +22,8 @@ class BurgerBuilder extends Component {
 
     state = {
         purchasing: false,
-        loading: false,
-        /* ingredients: {
-             Salad: 0,
-             Meat: 0,
-             Cheese: 0
-         },*/
-
-        //Now we are fetching ingredients from DB
-   
-       
-
+       // loading: false,
+      
     }
     /*
     My version of addIngredients using prevState
@@ -132,7 +123,7 @@ class BurgerBuilder extends Component {
     // }
 
     componentDidMount() {
-      console.log(  this.props);
+      
      this.props.onInitilizeIngredients();
 
         // axiosInstance.get('/ingredients.json')
@@ -145,10 +136,6 @@ class BurgerBuilder extends Component {
 
 
     }
-
-
-
-
 
     render() {
         const ingredients = this.props.ingredients;
@@ -173,7 +160,7 @@ class BurgerBuilder extends Component {
         }
 
 
-        let burger = <Spinner />;
+        let burger =  this.props.error? <p>Ingredients can't be loaded</p> :<Spinner />;
         if (this.props.ingredients) {
             burger = (<>
                 <Burger ingredients={ingredients} />
@@ -207,7 +194,8 @@ class BurgerBuilder extends Component {
 const  mapStateToProps=(state)=>{
         return{
             ingredients:state.ingredientsRed.ingredients,
-            burgerTotalprice: state.ingredientsRed.burgerTotalprice
+            burgerTotalprice: state.ingredientsRed.burgerTotalprice,
+            error:state.ingredientsRed.error
         };
 };
 
