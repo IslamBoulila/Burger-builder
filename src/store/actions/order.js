@@ -11,7 +11,7 @@ export const purshaseBurgerInit =()=>{
 }
 
 export const postOrderSuccess= (id,orderData)=>{
-    console.log(orderData);
+    
         return{
             type:actionTypes.POST_ORDER_SUCCESS,
             payload:{
@@ -37,7 +37,7 @@ export const postOrderStart= ()=>{
 }
 export const postOrder= (orderData)=>{
         return dispatch=>{
-            dispatch(postOrderStart);
+            dispatch(postOrderStart());
             axiosInstance.post('/orders.json', orderData)
             .then(response => {
                 console.log(response.data);

@@ -11,7 +11,7 @@ const Order = (props) => {
     }
     console.log(ingredients);
     const ingredientOutput= ingredients
-                        .map(ingredient => (<span className={styles.ingredients}>{ingredient[0]} ({ingredient[1]}) </span>));
+                        .map(ingredient => (<span className={styles.ingredients} key={ingredient[0]} >{ingredient[0]} ({ingredient[1]}) </span>));
     return (
 
         <div className={styles.Order} >
