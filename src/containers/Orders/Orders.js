@@ -1,56 +1,51 @@
 
 import React, { Component } from 'react';
 import Order from '../../components/Order/Order';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import styles from './Orders.module.css';
 import axiosInstance from '../../axios-order';
 import withErrorHandeling from '../../hoc/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/index';
+class Orders extends Component {
 
-class Orders extends Component{
+   
+    componentDidMount() {
 
-    state={
-        loading:true,
-        orders:[],
+        this.props.onFetchOrders();
     }
 
-    componentDidMount(){
-      
-        axiosInstance.get('/orders.json')
-        .then(response => {
-           const orders=[];
-          for(let key in response.data){
-            orders.push( {
-                ...response.data[key],
-                id:key,
-            }   );
-          }
-            this.setState({
-                loading:false,
-                orders:orders,
-            });
+    render() {
+        let orders = <Spinner />;
+        if (!this.props.loading)
+            orders = (this.props.orders.map(order =>
+                <Order ingredients={order.ingredients} price={order.price}
+                    key={order.id}
+                    customer={order.customer} />
+            )
 
-        })
-        .catch(error=>{
-            this.setState({loading:false});
-        });
-    }
-
-    render(){
-
-        return(
+            );
+        return (
             <div className={styles.Orders}>
-                {this.state.orders.map(order =>
-                      <Order  ingredients={order.ingredients} price={order.price} key={order.id}/>
-
-               )}
-              
+                    {orders}
             </div>
-            
-
 
         );
 
     }
-
 }
+const mapStateToProps = (state) => {
+    return {
+        orders: state.orderReducer.orders,
+        loading:state.orderReducer.loading,
+    };
+};
+const  mapDispatchToProps=(dispatch)=>{
+    return{
+        onFetchOrders: () => dispatch(actionCreators.fetchOrders()),
+    };
+};
 
-export default withErrorHandeling( Orders,axiosInstance);
+
+export default withErrorHandeling(
+    connect(mapStateToProps, mapDispatchToProps)(Orders), axiosInstance);

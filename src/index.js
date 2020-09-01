@@ -9,11 +9,15 @@ import {createStore, combineReducers, applyMiddleware,compose} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
+import orderReducer from './store/reducers/order';
+
+
 
 
 
 const rootReducer = combineReducers(
-  {ingredientsRed: burgerBuilderReducer,
+  { ingredientsRed : burgerBuilderReducer,
+    orderReducer : orderReducer,
 
 });
 const loggerMiddleware= store =>{

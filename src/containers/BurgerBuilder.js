@@ -123,7 +123,7 @@ class BurgerBuilder extends Component {
     // }
 
     componentDidMount() {
-      
+      this.props.purshaseBurgerInit();
      this.props.onInitilizeIngredients();
 
         // axiosInstance.get('/ingredients.json')
@@ -204,6 +204,7 @@ const  mapDispatchToProps=(dispatch)=>{
         onAddIngredient: (ingredient)=>dispatch(actionCreators.addIngredient(ingredient)),
         onRemoveIngredient: (ingredient)=>dispatch(actionCreators.removeIngredient(ingredient)),
         onInitilizeIngredients:   ()=>   dispatch(actionCreators.initializeIngredients()),
+        purshaseBurgerInit: ()=> dispatch(actionCreators.purshaseBurgerInit() )
     };
 };
 

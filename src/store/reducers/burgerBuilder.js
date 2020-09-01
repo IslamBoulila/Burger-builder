@@ -8,7 +8,7 @@ const initialState = {
     error:false
 };
 
-const ingredientsReducer=(state=initialState,action)=>{
+const ingredientsReducer=( state = initialState,action)=>{
     switch (action.type){
 
             case actionTypes.ADD_INGREDIENT:
@@ -39,6 +39,8 @@ const ingredientsReducer=(state=initialState,action)=>{
                     {   const  updatedState=
                         {...state,
                             ingredients:  action.payload.ingredients,
+                            burgerTotalprice:initialState.burgerTotalprice,
+                           
                         };
                         Object.keys(updatedState.ingredients).map(ingredient => {
             

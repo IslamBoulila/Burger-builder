@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
@@ -42,36 +42,30 @@ class Checkout extends Component {
     }
 
     render() {
-
-
-        return (
+        let summury=<Redirect to ="/"/>;
+        if(this.props.ingredients){
+            let purshasedRedirect=this.props.purshased?<Redirect to ='/' />:null;
+            summury= 
             <>
-                <CheckoutSummary 
-                    ingredients={this.props.ingredients}
-                    checkoutContinue={() => this.checkoutContinueHandler()}
-                    checkoutCancelled={() => this.checkoutCancelHandler()}
-                />
-
+             {purshasedRedirect}
+             <CheckoutSummary 
+                 ingredients={this.props.ingredients}
+                 checkoutContinue={() => this.checkoutContinueHandler()}
+                 checkoutCancelled={() => this.checkoutCancelHandler()}
+             />
             <Route path={this.props.match.path + '/contact-data'} component={ContactData}/>
+        </>;
+        }
 
-                {/*<Route path={this.props.match.path + '/contact-data'}
-                    render={(props) => (<ContactData  
-                        ingredients={this.props.ingredients}
-                        price={this.price}
-                        {...props} />)}
-
-                    />*/}
-            </>
-        );
-
-
+        return summury;
     }
 }
 
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredientsRed.ingredients,
-        price:state.ingredientsRed.burgerTotalprice
+        price:state.ingredientsRed.burgerTotalprice,
+        purshased:state.orderReducer.purshased,
     };
 };
 

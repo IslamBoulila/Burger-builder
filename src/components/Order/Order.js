@@ -19,7 +19,7 @@ const Order = (props) => {
                 Ingredients : {ingredientOutput}
                
             </p>
-            <p>Customer: </p>
+            <p>Customer: {props.customer.name}  </p>
             <p>Price: {Number.parseFloat(props.price).toFixed(2)} </p>
         </div>
 
