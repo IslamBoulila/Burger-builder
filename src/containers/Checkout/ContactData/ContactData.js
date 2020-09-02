@@ -24,7 +24,7 @@ class ContactData extends Component {
                     value:"",
                     validation:{
                         required:true,
-                        minLength:'3',
+                        minLength:3,
                     },
                     valid:false,
                     touched:false,
@@ -54,7 +54,7 @@ class ContactData extends Component {
                     value:"",
                     validation:{
                         required:true,
-                        minLength:'4',
+                        minLength:4,
                     },
                     valid:false,
                     touched:false,
