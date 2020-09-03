@@ -35,10 +35,10 @@ export const postOrderStart= ()=>{
         type: actionTypes.POST_ORDER_START,
     }
 }
-export const postOrder= (orderData)=>{
+export const postOrder= (orderData,token)=>{
         return dispatch=>{
             dispatch(postOrderStart());
-            axiosInstance.post('/orders.json', orderData)
+            axiosInstance.post('/orders.json?auth='+token, orderData)
             .then(response => {
                 console.log(response.data);
                 dispatch(postOrderSuccess(response.data.name , orderData));
@@ -72,11 +72,11 @@ export  const fetchOrdersFail=() =>{
     }
 }
 
-export  const fetchOrders=() =>{
+export  const fetchOrders=(token) =>{
     return dispatch=>{
         dispatch(fetchOrdersStart());
 
-        axiosInstance.get('/orders.json')
+        axiosInstance.get('/orders.json?auth='+token)
         .then(response => {
            const orders=[];
           for(let key in response.data){

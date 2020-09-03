@@ -151,7 +151,7 @@ class ContactData extends Component {
             price: this.props.price,
             deliveryMode: contactFormData.deliveryMode,
         }
-        this.props.onPurchaseBurger(orderData);
+        this.props.onPurchaseBurger(orderData,this.props.authToken);
 
        // this.props.history.push('/');
     }
@@ -199,12 +199,13 @@ const mapStateToProps = state => {
         ingredients: state.ingredientsRed.ingredients,
         price:state.ingredientsRed.burgerTotalprice,
         loading: state.orderReducer.loading,
+        authToken:state.authReducer.idToken,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onPurchaseBurger: (orderData)=> dispatch(actionCreators.postOrder(orderData) ),
+        onPurchaseBurger: (orderData,authToken)=> dispatch(actionCreators.postOrder(orderData,authToken) ),
     };
 };
 

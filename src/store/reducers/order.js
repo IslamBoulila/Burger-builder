@@ -20,15 +20,15 @@ const postOrderStart=(state,action)=>{
 }
 
 const postOrderSuccess=(state,action)=>{
-    const newOrder = {
+    /*const newOrder = {
         id: action.payload.id,
         orderData: action.payload.orderData,
 
-    };
+    };*/
     return updateObject(state,
         {
             loading: false,
-            orders: state.orders.concat(newOrder),
+            //orders: state.orders.concat(newOrder),
             purshased: true,
         });
 }

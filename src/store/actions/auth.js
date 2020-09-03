@@ -29,6 +29,18 @@ export const authFail= (err)=>{
     }
 }
 
+export const checkAuthTimeOut=(timeout)=>{
+    return dispatch=> setTimeout( ()=>{
+            dispatch(logout() );
+    }, timeout*1000 );
+}// BECAUSE THE TIMEWOUT WE GET FROM FIRE BASE (expiresIn) IS IN SECONDS and setTimesOut function expects ms.
+
+export const logout=()=>{
+   return {
+    type:actionTypes.LOG_OUT,
+   }
+}
+
 export const auth= (email,password,isSignUp)=>{
     
     return dispatch =>{
@@ -47,9 +59,9 @@ export const auth= (email,password,isSignUp)=>{
         .then(response =>{
             console.log(response);
             dispatch(authSuccess(response.data.idToken, response.data.localId));
+            dispatch(checkAuthTimeOut(response.data.expiresIn));
         })
         .catch(error=>{
-          
             dispatch(authFail(error.response.data.error));
         });
      
