@@ -6,6 +6,7 @@ import Button from '../../components/UI/Button/Button';
 import * as actionCreators from '../../store/actions/index';
 import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import {Redirect} from 'react-router-dom';
 
 class Auth extends Component {
 
@@ -131,10 +132,17 @@ class Auth extends Component {
         let errorMessage =null;
         if(this.props.error)
          errorMessage = (<p>{this.props.error.message}</p>);
+        
+         //redirect if i not authentificated
+         let redirect=null;
+         if( this.props.isAuthentificated && !this.props.isPurchasing)
+            redirect =<Redirect to ="/"  />
+        else {
 
-
+        }
         return (
             <div className={styles.AuthForm}>
+                {redirect}
                 <h2>{this.state.isSignUp?'Sign In Form':'Sign Up Form'}</h2>
                         {errorMessage}
                 <form onSubmit={this.onFormSubmit.bind(this)}>
@@ -151,8 +159,10 @@ class Auth extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loading:state.authReducer.loading,
-        error:state.authReducer.error,
+        loading:  state.authReducer.loading,
+        error:  state.authReducer.error,
+        isAuthentificated:  state.authReducer.idToken!=null,
+        isPurchasing: state.ingredientsRed.ingredients!=null,
     };
 };
 

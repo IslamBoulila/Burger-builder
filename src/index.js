@@ -12,10 +12,6 @@ import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
 
-
-
-
-
 const rootReducer = combineReducers(
   { ingredientsRed : burgerBuilderReducer,
     orderReducer : orderReducer,
