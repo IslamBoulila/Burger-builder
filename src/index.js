@@ -10,6 +10,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
+import authReducer from './store/reducers/auth';
 
 
 
@@ -18,6 +19,7 @@ import orderReducer from './store/reducers/order';
 const rootReducer = combineReducers(
   { ingredientsRed : burgerBuilderReducer,
     orderReducer : orderReducer,
+    authReducer:authReducer,
 
 });
 const loggerMiddleware= store =>{
