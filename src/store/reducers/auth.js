@@ -3,13 +3,12 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 
-
-
 const initialState = {
    error:null,
    loading:false,
    userId:null,
-   idToken:null
+   idToken:null,
+   redirectPath:'/'
 };
 
 const authStart=(state,action)=>{
@@ -33,6 +32,10 @@ const logOut=(state,action)=>{
     return updateObject(state,{userId:null,idToken:null});
 };
 
+const setAuthRedirect=(state,action)=>{
+    return updateObject(state,{redirectPath:action.payload.path}) ;
+};
+
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
 
@@ -42,6 +45,7 @@ const authReducer = (state = initialState, action) => {
 
         case actionTypes.AUTH_FAIL:  return authFail(state, action);
         case actionTypes.LOG_OUT:  return logOut(state, action);
+        case actionTypes.SET_AUTH_REDIRECT: return setAuthRedirect(state,action);
 
         default: return state;
     }

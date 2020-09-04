@@ -47,6 +47,11 @@ class Auth extends Component {
         isSignUp:false
     }
 
+    componentDidMount(){
+        if( !this.props.isBuilding && this.props.RedirectedPath!=='/') 
+        this.props.setAuthRedirectPath('/');
+    }
+
     checkValidation(value, rules) {
         let isValid = true;
         if (rules.required) {
@@ -133,13 +138,13 @@ class Auth extends Component {
         if(this.props.error)
          errorMessage = (<p>{this.props.error.message}</p>);
         
-         //redirect if i not authentificated
+         //redirect if  authentificated
          let redirect=null;
-         if( this.props.isAuthentificated && !this.props.isPurchasing)
-            redirect =<Redirect to ="/"  />
-        else {
-
-        }
+         if( this.props.isAuthentificated){
+             redirect =<Redirect to ={this.props.redirectPath}  />
+         }
+        
+       
         return (
             <div className={styles.AuthForm}>
                 {redirect}
@@ -162,13 +167,15 @@ const mapStateToProps = (state) => {
         loading:  state.authReducer.loading,
         error:  state.authReducer.error,
         isAuthentificated:  state.authReducer.idToken!=null,
-        isPurchasing: state.ingredientsRed.ingredients!=null,
+        isBuilding: state.ingredientsRed.isBuilding,
+        redirectPath: state.authReducer.redirectPath
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuth: (email, password,isSignUp) => dispatch(actionCreators.auth(email, password,isSignUp))
+        onAuth: (email, password,isSignUp) => dispatch(actionCreators.auth(email, password,isSignUp)),
+        setAuthRedirectPath: (path)=> dispatch(actionCreators.setAuthRedirect(path))
     };
 };
 

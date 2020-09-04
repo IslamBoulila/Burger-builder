@@ -7,7 +7,8 @@ import { updateObject } from '../utility';
 const initialState = {
     ingredients: null,
     burgerTotalprice: 6,
-    error: false
+    error: false,
+    isBuilding:false,
 };
 
 const addIngredients=(state,action)=>{
@@ -15,14 +16,14 @@ const addIngredients=(state,action)=>{
     const updatedIngredients = { ...state.ingredients };
     updatedIngredients[action.payload.type] = updatedIngredients[action.payload.type] + 1;
     const updatedPrice = state.burgerTotalprice + INGREDIENT_PRICES[action.payload.type];
-    return updateObject(state, {ingredients: updatedIngredients, updatedPrice });
+    return updateObject(state, {ingredients: updatedIngredients, burgerTotalprice:updatedPrice ,isBuilding:true});
 }
 const removeIngredients=(state,action)=>{
     const updatedIngredients = { ...state.ingredients };
     updatedIngredients[action.payload.type] = updatedIngredients[action.payload.type] >= 0 ? updatedIngredients[action.payload.type] - 1 : 0;
     const updatedPrice = state.burgerTotalprice - INGREDIENT_PRICES[action.payload.type];
 
-    return updateObject(state, {ingredients: updatedIngredients, updatedPrice });
+    return updateObject(state, {ingredients: updatedIngredients, burgerTotalprice:updatedPrice,isBuilding:true });
 }
 
 const setIngredients=(state,action)=>   {
@@ -31,6 +32,7 @@ const setIngredients=(state,action)=>   {
         ...state,
         ingredients: action.payload.ingredients,
         burgerTotalprice: initialState.burgerTotalprice,
+        isBuilding:false
 
     };
     Object.keys(updatedState.ingredients).map(ingredient => {

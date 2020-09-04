@@ -17,5 +17,6 @@ export {
 export {
     auth,
     logout,
+    setAuthRedirect,
 
 }from './auth';
