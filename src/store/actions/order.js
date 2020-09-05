@@ -36,6 +36,7 @@ export const postOrderStart= ()=>{
     }
 }
 export const postOrder= (orderData,token)=>{
+
         return dispatch=>{
             dispatch(postOrderStart());
             axiosInstance.post('/orders.json?auth='+token, orderData)
@@ -72,12 +73,13 @@ export  const fetchOrdersFail=() =>{
     }
 }
 
-export  const fetchOrders=(token) =>{
+export  const fetchOrders=(token,userId) =>{
     return dispatch=>{
         dispatch(fetchOrdersStart());
-
-        axiosInstance.get('/orders.json?auth='+token)
+        const queryParams='?auth='+token+'&orderBy="customer/id"&equalTo="'+userId+'"q';
+        axiosInstance.get('/orders.json'+queryParams)
         .then(response => {
+            
            const orders=[];
           for(let key in response.data){
             orders.push( {
@@ -88,6 +90,7 @@ export  const fetchOrders=(token) =>{
           dispatch(fetchOrdersSuccess(orders));
         })
         .catch(error=>{
+            console.log(error)
             dispatch( fetchOrdersFail());
         });
     }

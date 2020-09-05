@@ -141,12 +141,14 @@ class ContactData extends Component {
             ingredients: this.props.ingredients,
 
             customer: {
+                userId:this.props.userId,
                 name: contactFormData.name,
                 email: contactFormData.email,
                 address: {
                     street:contactFormData.street,
                     homeNumber:contactFormData.homeNumber,
-                },  
+                },
+                
             },
             price: this.props.price,
             deliveryMode: contactFormData.deliveryMode,
@@ -200,6 +202,7 @@ const mapStateToProps = state => {
         price:state.ingredientsRed.burgerTotalprice,
         loading: state.orderReducer.loading,
         authToken:state.authReducer.idToken,
+        userId:state.authReducer.userId,
     };
 };
 

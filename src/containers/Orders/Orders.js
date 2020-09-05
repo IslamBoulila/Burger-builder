@@ -12,7 +12,7 @@ class Orders extends Component {
    
     componentDidMount() {
 
-        this.props.onFetchOrders(this.props.authToken);
+        this.props.onFetchOrders(this.props.authToken,this.props.userId);
     }
 
     render() {
@@ -39,11 +39,12 @@ const mapStateToProps = (state) => {
         orders: state.orderReducer.orders,
         loading:state.orderReducer.loading,
         authToken:state.authReducer.idToken,
+        userId:state.authReducer.userId,
     };
 };
 const  mapDispatchToProps=(dispatch)=>{
     return{
-        onFetchOrders: (authToken) => dispatch(actionCreators.fetchOrders(authToken)),
+        onFetchOrders: (authToken,userId) => dispatch(actionCreators.fetchOrders(authToken,userId)),
     };
 };
 
