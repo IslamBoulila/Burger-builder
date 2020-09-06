@@ -6,7 +6,8 @@ import Button from '../../components/UI/Button/Button';
 import * as actionCreators from '../../store/actions/index';
 import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { updateObject, checkValidation } from '../../shared/utility';
 
 class Auth extends Component {
 
@@ -22,6 +23,7 @@ class Auth extends Component {
                 value: "",
                 validation: {
                     required: true,
+                    isEmail:true,
 
                 },
                 valid: false,
@@ -44,42 +46,26 @@ class Auth extends Component {
             },
         },
         isFormValid: false,
-        isSignUp:false
+        isSignUp: false
     }
 
-    componentDidMount(){
-        if( !this.props.isBuilding && this.props.RedirectedPath!=='/') 
-        this.props.setAuthRedirectPath('/');
-    }
-
-    checkValidation(value, rules) {
-        let isValid = true;
-        if (rules.required) {
-            isValid = value.trim("") !== "" && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        return isValid;
+    componentDidMount() {
+        if (!this.props.isBuilding && this.props.RedirectedPath !== '/')
+            this.props.setAuthRedirectPath('/');
     }
 
     inputChangeHandler = (event) => {
         const { name, value } = event.target;
         let isFormValid = true;
+        let updatedInputElement = updateObject(this.state.controls[name], {
+            value: value,
+            valid: checkValidation(value, this.state.controls[name].validation),
+            touched: true,
+        });
 
-        let updatedForm = {
-            ...this.state.controls,
-        };
-        let updatedInputElement = {
-            ...updatedForm[name],
-        };
-
-        updatedInputElement.value = value;
-        updatedInputElement.valid = this.checkValidation(value, updatedInputElement.validation);
-        updatedInputElement.touched = true;
-        //updatedInputElement.isFormValid=true;
-
-        updatedForm[name] = updatedInputElement;
+        let updatedForm = updateObject(this.state.controls, {
+            [name]: updatedInputElement,
+        });
 
         for (let inputElement in updatedForm) {
             isFormValid = isFormValid && updatedForm[inputElement].valid;
@@ -91,18 +77,17 @@ class Auth extends Component {
             isFormValid: isFormValid,
         })
         );
-
     }
 
-    onFormSubmit(event){
-            event.preventDefault();
-            this.props.onAuth(this.state.controls.email.value,
-                this.state.controls.password.value,
-                this.state.isSignUp);
+    onFormSubmit(event) {
+        event.preventDefault();
+        this.props.onAuth(this.state.controls.email.value,
+            this.state.controls.password.value,
+            this.state.isSignUp);
     }
-    onSwitchAuthMethodHandler=()=>{
-        this.setState(prevState=>({
-            isSignUp:!prevState.isSignUp,
+    onSwitchAuthMethodHandler = () => {
+        this.setState(prevState => ({
+            isSignUp: !prevState.isSignUp,
         }));
     }
 
@@ -128,33 +113,33 @@ class Auth extends Component {
                 touched={input.config.touched}
             />
         ));
-        if(this.props.loading)
-             formInputs=<Spinner/>;
-            
+        if (this.props.loading)
+            formInputs = <Spinner />;
+
         /**
          * Show an error message if email/password invalid
          */
-        let errorMessage =null;
-        if(this.props.error)
-         errorMessage = (<p>{this.props.error.message}</p>);
-        
-         //redirect if  authentificated
-         let redirect=null;
-         if( this.props.isAuthentificated){
-             redirect =<Redirect to ={this.props.redirectPath}  />
-         }
-        
-       
+        let errorMessage = null;
+        if (this.props.error)
+            errorMessage = (<p>{this.props.error.message}</p>);
+
+        //redirect if  authentificated
+        let redirect = null;
+        if (this.props.isAuthentificated) {
+            redirect = <Redirect to={this.props.redirectPath} />
+        }
+
+
         return (
             <div className={styles.AuthForm}>
                 {redirect}
-                <h2>{this.state.isSignUp?'Sign In Form':'Sign Up Form'}</h2>
-                        {errorMessage}
+                <h2>{this.state.isSignUp ? 'Sign In Form' : 'Sign Up Form'}</h2>
+                {errorMessage}
                 <form onSubmit={this.onFormSubmit.bind(this)}>
                     {formInputs}
                     <Button btnType="Success"  >Submit</Button>
                 </form>
-                <Button btnType="Danger" clicked={this.onSwitchAuthMethodHandler} >Switch to {this.state.isSignUp?'Sign Up':'Sign In'}</Button>
+                <Button btnType="Danger" clicked={this.onSwitchAuthMethodHandler} >Switch to {this.state.isSignUp ? 'Sign Up' : 'Sign In'}</Button>
             </div>
 
         );
@@ -164,9 +149,9 @@ class Auth extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        loading:  state.authReducer.loading,
-        error:  state.authReducer.error,
-        isAuthentificated:  state.authReducer.idToken!=null,
+        loading: state.authReducer.loading,
+        error: state.authReducer.error,
+        isAuthentificated: state.authReducer.idToken != null,
         isBuilding: state.ingredientsRed.isBuilding,
         redirectPath: state.authReducer.redirectPath
     };
@@ -174,8 +159,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAuth: (email, password,isSignUp) => dispatch(actionCreators.auth(email, password,isSignUp)),
-        setAuthRedirectPath: (path)=> dispatch(actionCreators.setAuthRedirect(path))
+        onAuth: (email, password, isSignUp) => dispatch(actionCreators.auth(email, password, isSignUp)),
+        setAuthRedirectPath: (path) => dispatch(actionCreators.setAuthRedirect(path))
     };
 };
 

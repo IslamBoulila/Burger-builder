@@ -1,7 +1,7 @@
 import React from 'react';
 import * as actionTypes from '../actions/actionTypes';
 import { INGREDIENT_PRICES } from '../prices';
-import { updateObject } from '../utility';
+import { updateObject } from '../../shared/utility';
 
 
 const initialState = {

@@ -41,7 +41,7 @@ export const postOrder= (orderData,token)=>{
             dispatch(postOrderStart());
             axiosInstance.post('/orders.json?auth='+token, orderData)
             .then(response => {
-                console.log(response.data);
+                
                 dispatch(postOrderSuccess(response.data.name , orderData));
             })
             .catch(error => {
@@ -76,7 +76,7 @@ export  const fetchOrdersFail=() =>{
 export  const fetchOrders=(token,userId) =>{
     return dispatch=>{
         dispatch(fetchOrdersStart());
-        const queryParams='?auth='+token+'&orderBy="customer/id"&equalTo="'+userId+'"q';
+        const queryParams='?auth='+token+'&orderBy="customer/id"&equalTo="'+userId+'"';
         axiosInstance.get('/orders.json'+queryParams)
         .then(response => {
             
@@ -90,7 +90,7 @@ export  const fetchOrders=(token,userId) =>{
           dispatch(fetchOrdersSuccess(orders));
         })
         .catch(error=>{
-            console.log(error)
+            
             dispatch( fetchOrdersFail());
         });
     }

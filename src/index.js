@@ -29,7 +29,8 @@ const loggerMiddleware= store =>{
         }
     }
 };
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const composeEnhancers = process.env.NODE_ENV==='production' ?window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 const store = createStore(rootReducer,composeEnhancers(
   applyMiddleware(loggerMiddleware ,thunk)  ) ); 
 

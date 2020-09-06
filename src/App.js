@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component,lazy,Suspense } from 'react';
 import Layout from './components/layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder';
-import Checkout from './containers/Checkout/Checkout';
-import Orders from './containers/Orders/Orders';
 import { Switch,Route } from 'react-router-dom';
-import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import {connect} from 'react-redux';
 import * as actionCreators from './store/actions/index';
 import {Redirect} from 'react-router-dom';
+
+
+const lazyAuth = lazy(() => import('./containers/Auth/Auth'));
+const lazyCheckout = lazy(() => import('./containers/Checkout/Checkout'));
+const lazyOrders = lazy(() => import('./containers/Orders/Orders'));
 
 
 class App extends Component {
@@ -18,7 +20,7 @@ class App extends Component {
     }
   render() {
     let routes =  <Switch>
-                      <Route path="/auth" component={Auth} />
+                      <Route path="/auth" component={lazyAuth} />
                       <Route path="/" exact component={BurgerBuilder} />
                       <Redirect to ="/" />
                   </Switch>;
@@ -26,8 +28,9 @@ class App extends Component {
         routes= <Switch>
                
                       <Route path="/logout" component={Logout} />
-                      <Route path="/checkout" component={Checkout} />
-                       <Route path="/orders" component={Orders} />
+                      <Route path="/checkout" component={lazyCheckout} />
+                      <Route path="/auth" component={lazyAuth} />
+                       <Route path="/orders" component={lazyOrders} />
                        <Route path="/" exact component={BurgerBuilder} />
                        <Redirect to ="/" />
                   </Switch>
@@ -36,7 +39,10 @@ class App extends Component {
     return (
       <div className="">
         <Layout>
-       {routes}
+        <Suspense fallback={<div>Loading...</div>}>
+           {routes}
+        </Suspense>
+      
         </Layout>
 
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BurgerIngredients from './BurgerIngredients/BurgerIngredient';
 import classes from './Burger.module.css';
-import { object } from 'prop-types';
+
 
 const Burger = (props) => {
 
@@ -10,10 +10,8 @@ const Burger = (props) => {
         for (let ingredientRep = 0; ingredientRep < props.ingredients[key]; ingredientRep++)
             burgerIngredients.push(<BurgerIngredients type={key} key={key + ingredientRep} />);
 
-    console.log(burgerIngredients);
     if (burgerIngredients.length == 0)
         burgerIngredients = <div>Please start adding ingredients</div>
-
 
 
     return (

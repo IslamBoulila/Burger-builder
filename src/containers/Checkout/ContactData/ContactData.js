@@ -7,6 +7,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../../store/actions/index';
 import orderReducer from '../../../store/reducers/order';
+import {updateObject, checkValidation} from '../../../shared/utility';
 
 
 class ContactData extends Component {
@@ -39,6 +40,7 @@ class ContactData extends Component {
                     value:"",
                     validation:{
                         required:true,
+                        isEmail:true,
                         
                     },
                     valid:false,
@@ -88,34 +90,33 @@ class ContactData extends Component {
             isFormValid:false,
         }
     }
-    checkValidation(value,rules){
-        let isValid=true;
-        if(rules.required){
-            isValid=value.trim("")!=="" && isValid;
-        }
-        if(rules.minLength){
-            isValid=value.length>=rules.minLength && isValid;
-        }
-        return isValid;
-    }
+   
 
     inputChangeHandler = (event) => {
         const {name,value} = event.target;
         let isFormValid=true;
        
-        let updatedForm={
+       /* let updatedForm={
             ...this.state.orderForm,
         };
         let updatedInputElement={
             ...updatedForm[name],
-        };
-
-        updatedInputElement.value=value;
+        };*/
+        let updatedInputElement= updateObject(this.state.orderForm[name],{
+            value:value,
+            valid:checkValidation(value,this.state.orderForm[name].validation),
+            touched:true,
+            isFormValid:true,
+        });
+        let updatedForm=updateObject(this.state.orderForm, { 
+                                                             [name]: updatedInputElement
+                                                           });
+        /*updatedInputElement.value=value;
         updatedInputElement.valid=this.checkValidation(value,updatedInputElement.validation);
         updatedInputElement.touched=true;
         updatedInputElement.isFormValid=true;
 
-        updatedForm[name]=updatedInputElement;
+        updatedForm[name]=updatedInputElement;*/
         
         for(let inputElement in updatedForm ){
             isFormValid= isFormValid && updatedForm[inputElement].valid;
