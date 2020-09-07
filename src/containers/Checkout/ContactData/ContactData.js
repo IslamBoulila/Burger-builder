@@ -142,7 +142,7 @@ class ContactData extends Component {
             ingredients: this.props.ingredients,
 
             customer: {
-                userId:this.props.userId,
+                id:this.props.userId,
                 name: contactFormData.name,
                 email: contactFormData.email,
                 address: {

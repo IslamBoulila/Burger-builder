@@ -6,7 +6,7 @@ import OrderSummary from '../components/OrderSummary/OrderSummary';
 import axiosInstance from '../axios-order';
 
 import Spinner from '../components/UI/Spinner/Spinner';
-import withErrorHandeling from '../hoc/withErrorHandler/withErrorHandler';
+import withErrorHandling from '../hoc/withErrorHandler/withErrorHandler';
 import {connect} from 'react-redux';
 import {INGREDIENT_PRICES} from '../store/prices';
 
@@ -129,9 +129,7 @@ export class BurgerBuilder extends Component {
                 continueOrder={this.purchaseContinueHandler}
                 price={this.props.burgerTotalprice} />;
         }
-        if (this.state.loading) {
-            orderSummary = <Spinner />
-        }
+       
 
 
         let burger =  this.props.error? <p>Ingredients can't be loaded</p> :<Spinner />;
@@ -188,7 +186,7 @@ const  mapDispatchToProps=(dispatch)=>{
 };
 
 
-export default withErrorHandeling(React.memo(
+export default withErrorHandling(React.memo(
     
    connect(mapStateToProps,mapDispatchToProps)(BurgerBuilder)
 

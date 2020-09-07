@@ -4,7 +4,7 @@ import Order from '../../components/Order/Order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import styles from './Orders.module.css';
 import axiosInstance from '../../axios-order';
-import withErrorHandeling from '../../hoc/withErrorHandler/withErrorHandler';
+import withErrorHandling from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions/index';
 class Orders extends Component {
@@ -49,5 +49,5 @@ const  mapDispatchToProps=(dispatch)=>{
 };
 
 
-export default withErrorHandeling(
+export default withErrorHandling(
     connect(mapStateToProps, mapDispatchToProps)(Orders), axiosInstance);

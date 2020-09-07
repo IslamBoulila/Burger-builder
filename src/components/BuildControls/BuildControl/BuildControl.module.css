@@ -14,3 +14,10 @@ margin: 5px 0;
     cursor: pointer;
     border: 1px solid tomato;
 }
+
+
+.Label {
+    padding: 10px;
+    font-weight: bold;
+    width: 80px;
+}

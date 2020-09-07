@@ -37,7 +37,6 @@ export const initializeIngredients=()=>{
             .then(response => {
                 //*Initilize the ingredients and update the price
                 dispatch( setIngredients(response.data) );
-
             })
             .catch(error=>{  fetchIngredientsFailed ()});
       
