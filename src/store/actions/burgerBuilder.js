@@ -31,16 +31,9 @@ export const  fetchIngredientsFailed=()=>{
 };
 
 export const initializeIngredients=()=>{
-    return dispatch=>{
-
-        axiosInstance.get('/ingredients.json')
-            .then(response => {
-                //*Initilize the ingredients and update the price
-                dispatch( setIngredients(response.data) );
-            })
-            .catch(error=>{  fetchIngredientsFailed ()});
-      
-    }
+  return {
+      type:actionTypes.INIT_INGREDIENTS
+  }
 }
 
 

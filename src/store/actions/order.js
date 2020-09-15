@@ -2,97 +2,76 @@ import * as actionTypes from './actionTypes';
 import axiosInstance from '../../axios-order';
 
 
-
-
-export const purshaseBurgerInit =()=>{
-    return{
-        type:actionTypes.PURSHASE_BURGER_INIT,
+export const purshaseBurgerInit = () => {
+    return {
+        type: actionTypes.PURSHASE_BURGER_INIT,
     }
 }
 
-export const postOrderSuccess= (id,orderData)=>{
-    
-        return{
-            type:actionTypes.POST_ORDER_SUCCESS,
-            payload:{
-                id:id,
-                orderData:orderData,
-            }
+export const postOrderSuccess = (id, orderData) => {
+
+    return {
+        type: actionTypes.POST_ORDER_SUCCESS,
+        payload: {
+            id: id,
+            orderData: orderData,
         }
+    }
 }
 
-export const postOrderFail= (error)=>{
-            return{
-                type:actionTypes.POST_ORDER_FAIL,
-                payload:{
-                    error,
-                }
-            }
+export const postOrderFail = (error) => {
+    return {
+        type: actionTypes.POST_ORDER_FAIL,
+        payload: {
+            error,
+        }
+    }
 }
 
-export const postOrderStart= ()=>{
+export const postOrderStart = () => {
     return {
         type: actionTypes.POST_ORDER_START,
     }
 }
-export const postOrder= (orderData,token)=>{
 
-        return dispatch=>{
-            dispatch(postOrderStart());
-            axiosInstance.post('/orders.json?auth='+token, orderData)
-            .then(response => {
-                
-                dispatch(postOrderSuccess(response.data.name , orderData));
-            })
-            .catch(error => {
-                dispatch(postOrderFail(error ));
-            });
-        };
-}
-
-
-export  const fetchOrdersStart=() =>{
+export const postOrder = (orderData, token) => {
     return {
-        type:actionTypes.FETCH_ORDERS_START
-    }
-}
-
-
-export  const fetchOrdersSuccess=(fetchedOrders) =>{
-    return {
-        type:actionTypes.FETCH_ORDERS_SUCCESS,
-        payload:{
-            orders:fetchedOrders,
+        type: actionTypes.POST_ORDER,
+        payload: {
+            orderData: orderData,
+            token: token,
         }
     }
 }
 
-export  const fetchOrdersFail=() =>{
+export const fetchOrdersStart = () => {
     return {
-        type:actionTypes.FETCH_ORDERS_FAIL
+        type: actionTypes.FETCH_ORDERS_START
     }
 }
 
-export  const fetchOrders=(token,userId) =>{
-    return dispatch=>{
-        dispatch(fetchOrdersStart());
-        const queryParams='?auth='+token+'&orderBy="customer/id"&equalTo="'+userId+'"';
-        axiosInstance.get('/orders.json'+queryParams)
-        .then(response => {
-            
-           const orders=[];
-          for(let key in response.data){
-            orders.push( {
-                ...response.data[key],
-                id:key,
-            }   );
-          }
-          dispatch(fetchOrdersSuccess(orders));
-        })
-        .catch(error=>{
-            
-            dispatch( fetchOrdersFail());
-        });
+export const fetchOrdersSuccess = (fetchedOrders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        payload: {
+            orders: fetchedOrders,
+        }
     }
-        
+}
+
+export const fetchOrdersFail = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAIL
+    }
+}
+
+export const fetchOrders = (token, userId) => {
+    return {
+        type: actionTypes.FETCH_ORDERS,
+        payload: {
+            token: token,
+            userId: userId,
+        }
+    }
+
 }

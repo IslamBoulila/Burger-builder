@@ -1,7 +1,7 @@
-import {put ,delay} from 'redux-saga/effects';
+import {put ,delay, all} from 'redux-saga/effects';
 import axios from 'axios';
 
-import * as actionTypes from '../actions/actionTypes';
+
 import * as actionCreators from '../actions/index'; 
 
 export function* initiateLogoutSaga(action){
@@ -37,9 +37,11 @@ export function*  authSaga(action){
            const response =  yield axios.post(url, authData);
             const timeOut = response.data.expiresIn;
         const expirationDate = new Date(new Date().getTime() + timeOut * 1000);
-        localStorage.setItem("token", response.data.idToken);
-        localStorage.setItem("userId", response.data.localId);
-        localStorage.setItem("expirationDate", expirationDate);
+        yield all([
+             localStorage.setItem("token", response.data.idToken),
+             localStorage.setItem("userId", response.data.localId),
+             localStorage.setItem("expirationDate", expirationDate),
+        ]);
         yield put(actionCreators.authSuccess(response.data.idToken, response.data.localId));
         yield put(actionCreators.checkAuthTimeOut(timeOut));
 

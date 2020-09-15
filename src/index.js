@@ -13,7 +13,7 @@ import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
 import './index.css';
 import App from './App';
-import {watchAuthSaga} from './store/sagas/index';
+import {watchAuthSaga, watchOrderSaga,watchBurgerSaga} from './store/sagas/index';
 
 const rootReducer = combineReducers(
   { ingredientsRed : burgerBuilderReducer,
@@ -39,6 +39,8 @@ const store = createStore(rootReducer,composeEnhancers(
   applyMiddleware(loggerMiddleware ,thunk, sagaMiddleware )  ) ); 
 
 sagaMiddleware.run(watchAuthSaga);
+sagaMiddleware.run(watchOrderSaga);
+sagaMiddleware.run(watchBurgerSaga);
 
 ReactDOM.render(
   <React.StrictMode>
