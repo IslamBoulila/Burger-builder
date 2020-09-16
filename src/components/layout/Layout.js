@@ -16,7 +16,7 @@ const sideDrawerClosedHandler=()=>{
 }
 
 const sideDrawerToggleHandler=()=>{
-    setShowSideDrawer(prevState => ({showSideDrawer:!prevState.showSideDrawer}));
+    setShowSideDrawer( !showSideDrawer);
     }
    
         return (
