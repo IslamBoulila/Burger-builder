@@ -83,32 +83,13 @@ export class BurgerBuilder extends Component {
     this.props.history.push( '/checkout' )
      }
 
-    // initilizingTheIngredients=(databaseIngredients)=>{
-    //   //  this.setState({ingredients:databaseIngredients});
-
-    //     Object.keys(this.state.ingredients).map(ingredient => {
-            
-    //         if (this.state.ingredients[ingredient] !== 0){
-    //             this.setState({ burgerTotalprice: this.state.burgerTotalprice + INGREDIENT_PRICES[ingredient]
-    //             });
-    //             this.updatePurchasable(databaseIngredients);
-    //         }
-           
-    //     });
    
-    // }
+  
 
     componentDidMount() {
       this.props.purshaseBurgerInit();
      this.props.onInitilizeIngredients();
 
-        // axiosInstance.get('/ingredients.json')
-        //     .then(response => {
-        //         //*Initilize the ingredients and update the price
-        //         this.initilizingTheIngredients(response.data);
-
-        //     })
-        //     .catch(error=>{});
     }
 
     render() {

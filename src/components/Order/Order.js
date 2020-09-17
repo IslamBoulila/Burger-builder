@@ -15,12 +15,12 @@ const Order = (props) => {
     return (
 
         <div className={styles.Order} >
-            <p>
-                Ingredients : {ingredientOutput}
+            <p className={styles.textInfo}>
+                <span>Ingredients :</span> {ingredientOutput}
                
             </p>
-            <p>Customer: {props.customer.name}  </p>
-            <p>Price: {Number.parseFloat(props.price).toFixed(2)} </p>
+            <p className={styles.textInfo}><span>Customer :</span> {props.customer.name}  </p>
+            <p className={styles.textInfo}><span>Price :</span> {Number.parseFloat(props.price).toFixed(2)} </p>
         </div>
 
     );

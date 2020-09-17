@@ -10,10 +10,15 @@
     .ingredients{
         display: inline-block;
         text-transform: capitalize;
-        margin: 0px  8px ;
+        /*margin: 0px  8px ;*/
+        margin :0px 8px 5px 8px;
         border:1px solid lightseagreen;
         padding:2px 4px;
         
+        }
+
+        .textInfo span:first-child{
+            font-weight: 600;
         }
         
     

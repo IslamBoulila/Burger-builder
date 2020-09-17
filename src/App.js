@@ -18,11 +18,12 @@ const lazyOrders = lazy(() => import('./containers/Orders/Orders'));
 
 
 const App = props => {
+  const { onTryAutoSignIn} = props;
 
   useEffect(() => {
-    props.onTryAutoSignIn();
+    onTryAutoSignIn();
 
-  }, [])
+  }, [onTryAutoSignIn]);
 
 
 

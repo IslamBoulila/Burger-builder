@@ -21,12 +21,12 @@
     width: 10%;
     height: 15%;
     position: absolute;
-    background-color: white;
+    background-color: #f5c29c; 
     left: 30%;
     top: 50%;
     border-radius: 40%;
     transform: rotate(-20deg);
-    box-shadow: inset -2px -3px #c9c9c9;
+    box-shadow: inset -2px -3px#f2a66d;
 }
 
 .Seeds1:after {
@@ -34,12 +34,12 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: white;
+    background-color: #f5c29c; 
     left: -170%;
     top: -260%;
     border-radius: 40%;
     transform: rotate(60deg);
-    box-shadow: inset -1px 2px #c9c9c9;
+    box-shadow: inset -1px 2px #f2a66d;
   }
   
 .Seeds1:before {
@@ -47,24 +47,24 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: white;
+    background-color:#f5c29c;
     left: 180%;
     top: -50%;
     border-radius: 40%;
     transform: rotate(60deg);
-    box-shadow: inset -1px -3px #c9c9c9;
+    box-shadow: inset -1px -3px #f2a66d;
   }
 
   .Seeds2 {
     width: 10%;
     height: 15%;
     position: absolute;
-    background-color: white;
+    background-color: #f5c29c;
     left: 64%;
     top: 50%;
     border-radius: 40%;
     transform: rotate(10deg);
-    box-shadow: inset -3px 0 #c9c9c9;
+    box-shadow: inset -3px 0 #f2a66d;
   }
   
   .Seeds2:before {
@@ -72,12 +72,12 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: white;
+    background-color: #f5c29c; 
     left: 150%;
     top: -130%;
     border-radius: 40%;
     transform: rotate(90deg);
-    box-shadow: inset 1px 3px #c9c9c9;
+    box-shadow: inset 1px 3px #f2a66d;
   }
   
 
@@ -105,9 +105,12 @@
     border-radius: 20px;
 }
 
-.Bacon {
-    width: 80%;
-    height: 3%;
-    background: linear-gradient(#bf3813, #c45e38);
-    margin: 2% auto;
+
+
+.Tomato{
+  width :85%;
+  height:5%;
+  background-color: #ed1c09;
+ margin:2% auto;
+ border-radius:30px;
 }
