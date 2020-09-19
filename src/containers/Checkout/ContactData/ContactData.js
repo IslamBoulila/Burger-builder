@@ -82,7 +82,7 @@ class ContactData extends Component {
                         options:[ {value:'fastest', displayValue:'Fastest'}, {value:'normal', displayValue:'Normal'}],
                         name:'deliveryMode'
                     },
-                    value:"",
+                    value:"normal",
                     validation:{ },
                     valid:true,
                 },

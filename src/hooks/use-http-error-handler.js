@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useHttpErrorHandler = (axios)=>{
 
@@ -20,7 +20,7 @@ export const useHttpErrorHandler = (axios)=>{
             axios.interceptors.request.eject(reqInterceptor);
             axios.interceptors.response.eject(resInterceptor);
         };
-    }, [reqInterceptor, resInterceptor]);
+    }, [reqInterceptor, resInterceptor,axios.interceptors.request,axios.interceptors.response]);
 
     /*const errorConfirmedHandler = () => {
         setError(null);

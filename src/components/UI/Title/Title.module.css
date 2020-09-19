@@ -1,0 +1,45 @@
+.Title{
+text-align: center;
+color: turquoise;
+margin:20px auto;
+font-size: 35px;
+
+width: 80%;
+font-family: "Amatic SC",cursive;
+
+}
+
+h1.Title{
+   
+    font-size: 35px;
+    }
+h1.Title strong{
+    font-size: 40px;
+}
+
+h2.Title{
+   
+    font-size: 30px;
+    }
+h2.Title strong{
+    font-size: 35px;
+}
+
+
+@media (max-width: 499px){
+    h1.Title{
+font-size:25px;
+
+    }
+    h1.Title strong{
+        font-size: 30px;
+    }
+
+    h2.Title{
+        font-size:20px;
+    }
+    h2.Title strong{
+      font-size: 25px;
+            }
+
+}

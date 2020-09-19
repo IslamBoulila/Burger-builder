@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../UI/Button/Button';
 import Burger from '../../Burger/Burger';
 import  styles from  './CheckoutSummary.module.css';
+import Title from '../../UI/Title/Title';
 
 
 const CheckoutSummary=(props)=>{
@@ -12,7 +13,7 @@ const CheckoutSummary=(props)=>{
         
     <div  className={styles.OrderSummary} >
         <div style={{width:'100%'}} >
-            <h1>Hope it tastes good :p</h1>
+           <Title type="h2" >Hope it tastes good &#128523;</Title>
         <Burger   ingredients={props.ingredients}/>
         </div>
            

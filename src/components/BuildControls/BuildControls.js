@@ -8,7 +8,7 @@ const BuildControls = (props) => {
     const labels = Object.keys(props.ingredients);
     return (
         <div className={classes.BuildControls}>
-            <p><strong>Current price: </strong>{props.price.toFixed(2)}</p>
+            <p><strong>Current price: </strong>{props.price.toFixed(2)} MAD</p>
             {labels.map(label => <BuildControl
                 label={label} key={label}
 
